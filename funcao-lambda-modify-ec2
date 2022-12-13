@@ -1,0 +1,27 @@
+import json
+import boto3
+
+ec2 = boto3.resource('ec2', region_name='us-east-1')
+
+def lambda_handler(event, context):
+    instances = ec2.instances.filter(
+        Filters=[
+            {
+                'Name': 'instance-state-name',
+                'Values': [
+                    'stopped',
+                ]
+            },
+        ],
+        
+)
+    for instance in instances:
+        id=instance.id
+        print("Type Alterado "+id)
+        instance.modify_attribute(
+            InstanceType={
+                'Value': 't2.medium'
+             }
+        )
+
+    return print("Success")
