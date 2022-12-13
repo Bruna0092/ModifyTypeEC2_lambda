@@ -12,15 +12,21 @@ def lambda_handler(event, context):
                     'stopped',
                 ]
             },
+            {
+                'Name': 'instance-type',
+                'Values': [
+                    't3.2xlarge',
+                ]
+            },
         ],
         
 )
     for instance in instances:
         id=instance.id
-        print("Type Alterado "+id)
+        print("Type alterado "+id)
         instance.modify_attribute(
             InstanceType={
-                'Value': 't2.medium'
+                'Value': 't3.xlarge'
              }
         )
 
